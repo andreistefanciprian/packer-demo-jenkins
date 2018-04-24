@@ -1,0 +1,41 @@
+{
+
+    "variables": {
+         "service_account_json": "../../terraform-account.json",
+         "project_id": "{{env `PROJECT_ID`}}"
+     },
+
+"builders": [
+        {
+           "type": "googlecompute",
+           "project_id": "{{user `project_id`}}",
+           "machine_type": "f1-micro",
+           "source_image_family": "ubuntu-1404-lts",
+           "region": "europe-west4",
+           "zone": "europe-west4-a",
+           "image_description": "ubuntu machine with ngins installed",
+           "image_name": "ubuntu-packer-jenkins",
+           "disk_size": 10,
+           "account_file": "{{ user `service_account_json`}}",
+           "communicator": "ssh",
+           "ssh_private_key_file": "/Users/cipcirip/.ssh/id_rsa",
+           "ssh_username": "cipcirip",
+           "ssh_pty": "true"
+        }
+     ],
+
+"provisioners": [
+         {
+          "type": "shell",
+          "inline": [
+            "gsutil cp gs://cip1/install_nginx.sh .",
+            "chmod +7 install_nginx.sh",
+            "sudo ./install_nginx.sh"
+          ]
+        }
+      ]
+}
+
+
+
+
