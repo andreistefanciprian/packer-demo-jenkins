@@ -1,7 +1,7 @@
 {
 
     "variables": {
-         "service_account_json": "~/terraform-account.json",
+         "service_account_json": "../../terraform-account.json",
          "project_id": "{{env `PROJECT_ID`}}"
      },
 
